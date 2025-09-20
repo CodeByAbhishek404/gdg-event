@@ -40,7 +40,7 @@ body {
   transition: all 0.3s ease;
 }
 
-/* Enhanced dark mode for whole page */
+/* Enhanced dark mode for whole page with proper text visibility */
 body.dark {
   background-color: var(--dark-background);
   color: var(--dark-foreground);
@@ -48,6 +48,7 @@ body.dark {
 
 body.dark .section {
   background-color: var(--dark-background);
+  color: var(--dark-foreground);
 }
 
 body.dark .registration {
@@ -64,7 +65,7 @@ body.dark .footer {
   padding: 0 20px;
 }
 
-/* Header */
+/* Fixed header with proper dark mode text visibility */
 .header {
   position: fixed;
   top: 0;
@@ -74,10 +75,12 @@ body.dark .footer {
   z-index: 1000;
   padding: 1rem 0;
   transition: all 0.3s ease;
+  border-bottom: 1px solid var(--border);
 }
 
 .dark .header {
   background: rgba(15, 23, 42, 0.95);
+  border-bottom-color: var(--dark-border);
 }
 
 .nav {
@@ -91,6 +94,7 @@ body.dark .footer {
   font-weight: bold;
   font-size: 1.5rem;
   color: var(--primary);
+  transition: color 0.3s ease;
 }
 
 .dark .logo {
@@ -110,6 +114,7 @@ body.dark .footer {
   transition: color 0.3s ease;
 }
 
+/* Fixed navigation links visibility in dark mode */
 .dark .nav-links a {
   color: var(--dark-foreground);
 }
@@ -118,17 +123,61 @@ body.dark .footer {
   color: var(--primary);
 }
 
+.dark .nav-links a:hover {
+  color: var(--dark-primary);
+}
+
+/* Modern fancy toggle button design */
 .theme-toggle {
-  background: none;
+  position: relative;
+  width: 60px;
+  height: 30px;
+  background: var(--muted);
   border: 2px solid var(--border);
-  border-radius: var(--radius);
-  padding: 0.5rem;
+  border-radius: 25px;
   cursor: pointer;
   transition: all 0.3s ease;
+  overflow: hidden;
+  margin-left: auto;
+}
+
+.dark .theme-toggle {
+  background: var(--dark-muted);
+  border-color: var(--dark-border);
+}
+
+.theme-toggle::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 22px;
+  height: 22px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  border-radius: 50%;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(5, 150, 105, 0.3);
+}
+
+.dark .theme-toggle::before {
+  transform: translateX(28px);
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  box-shadow: 0 2px 8px rgba(251, 191, 36, 0.3);
 }
 
 .theme-toggle:hover {
   border-color: var(--primary);
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.2);
+}
+
+.dark .theme-toggle:hover {
+  border-color: #fbbf24;
+  box-shadow: 0 4px 12px rgba(251, 191, 36, 0.2);
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
 }
 
 /* Hero Section */
@@ -222,6 +271,7 @@ body.dark .footer {
 /* Sections */
 .section {
   padding: 5rem 0;
+  transition: all 0.3s ease;
 }
 
 .section-title {
@@ -231,6 +281,7 @@ body.dark .footer {
   text-align: center;
   margin-bottom: 3rem;
   color: var(--primary);
+  transition: color 0.3s ease;
 }
 
 .dark .section-title {
@@ -283,6 +334,7 @@ body.dark .footer {
   font-size: 1.25rem;
   margin-bottom: 1rem;
   color: var(--card-foreground);
+  transition: color 0.3s ease;
 }
 
 .dark .highlight-card h3 {
@@ -292,6 +344,7 @@ body.dark .footer {
 .highlight-card p {
   color: var(--foreground);
   opacity: 0.9;
+  transition: color 0.3s ease;
 }
 
 .dark .highlight-card p {
@@ -302,6 +355,7 @@ body.dark .footer {
 .registration {
   background: var(--muted);
   padding: 5rem 0;
+  transition: all 0.3s ease;
 }
 
 .dark .registration {
@@ -315,11 +369,12 @@ body.dark .footer {
   padding: 3rem;
   border-radius: var(--radius);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
 }
 
 .dark .form-container {
   background: var(--dark-background);
-  border: 1px solid #334155;
+  border: 1px solid var(--dark-border);
 }
 
 .form-group {
@@ -331,6 +386,7 @@ body.dark .footer {
   margin-bottom: 0.5rem;
   font-weight: 600;
   color: var(--foreground);
+  transition: color 0.3s ease;
 }
 
 .dark .form-group label {
@@ -344,7 +400,9 @@ body.dark .footer {
   border: 2px solid var(--border);
   border-radius: var(--radius);
   font-size: 1rem;
-  transition: border-color 0.3s ease;
+  transition: all 0.3s ease;
+  background: white;
+  color: var(--foreground);
 }
 
 .dark .form-group input,
@@ -358,6 +416,11 @@ body.dark .footer {
 .form-group select:focus {
   outline: none;
   border-color: var(--primary);
+}
+
+.dark .form-group input:focus,
+.dark .form-group select:focus {
+  border-color: var(--dark-primary);
 }
 
 .submit-button {
@@ -392,6 +455,7 @@ body.dark .footer {
   font-size: 1.5rem;
   margin-bottom: 1rem;
   color: var(--primary);
+  transition: color 0.3s ease;
 }
 
 .dark .location-info h3 {
@@ -400,6 +464,7 @@ body.dark .footer {
 
 .location-info p {
   color: var(--foreground);
+  transition: color 0.3s ease;
 }
 
 .dark .location-info p {
@@ -415,6 +480,7 @@ body.dark .footer {
   justify-content: center;
   border: 2px dashed var(--border);
   color: var(--muted-foreground);
+  transition: all 0.3s ease;
 }
 
 .dark .map-placeholder {
@@ -437,6 +503,7 @@ body.dark .footer {
   background: var(--card);
   border-radius: var(--radius);
   border-left: 4px solid var(--primary);
+  transition: all 0.3s ease;
 }
 
 .dark .schedule-item {
@@ -448,6 +515,7 @@ body.dark .footer {
   font-weight: bold;
   color: var(--primary);
   min-width: 100px;
+  transition: color 0.3s ease;
 }
 
 .dark .schedule-time {
@@ -459,6 +527,7 @@ body.dark .footer {
   font-weight: bold;
   margin-bottom: 0.5rem;
   color: var(--foreground);
+  transition: color 0.3s ease;
 }
 
 .dark .schedule-content h4 {
@@ -468,6 +537,7 @@ body.dark .footer {
 .schedule-content p {
   color: var(--foreground);
   opacity: 0.8;
+  transition: color 0.3s ease;
 }
 
 .dark .schedule-content p {
@@ -538,6 +608,7 @@ body.dark .footer {
   text-align: center;
   z-index: 2000;
   display: none;
+  transition: all 0.3s ease;
 }
 
 .dark .success-message {

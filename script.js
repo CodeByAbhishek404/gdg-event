@@ -1,4 +1,3 @@
-// Theme Toggle Functionality
 const themeToggle = document.getElementById("themeToggle")
 const themeIcon = document.getElementById("themeIcon")
 const body = document.body
@@ -15,22 +14,23 @@ themeToggle.addEventListener("click", () => {
   const isDark = body.classList.contains("dark")
   themeIcon.textContent = isDark ? "☀️" : "🌙"
   localStorage.setItem("theme", isDark ? "dark" : "light")
+
+  updateHeaderBackground()
 })
 
-// Countdown Timer
 function updateCountdown() {
   // Set event date (December 15, 2024, 9:00 AM)
-  const eventDate = new Date("2025-09-25T23:59:00").getTime();
+ const eventDate = new Date("2025-09-25T23:59:00").getTime();
 
   const now = new Date().getTime()
   const distance = eventDate - now
 
   if (distance < 0) {
     // Event has passed
-    document.getElementById("days").textContent = "15"
-    document.getElementById("hours").textContent = "60"
-    document.getElementById("minutes").textContent = "60"
-    document.getElementById("seconds").textContent = "60"
+    document.getElementById("days").textContent = "00"
+    document.getElementById("hours").textContent = "00"
+    document.getElementById("minutes").textContent = "00"
+    document.getElementById("seconds").textContent = "00"
     return
   }
 
@@ -66,17 +66,20 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
   })
 })
 
-// Header Background on Scroll
-window.addEventListener("scroll", () => {
+function updateHeaderBackground() {
   const header = document.querySelector(".header")
-  if (window.scrollY > 100) {
-    header.style.background = body.classList.contains("dark") ? "rgba(15, 23, 42, 0.98)" : "rgba(255, 255, 255, 0.98)"
-  } else {
-    header.style.background = body.classList.contains("dark") ? "rgba(15, 23, 42, 0.95)" : "rgba(255, 255, 255, 0.95)"
-  }
-})
+  const isDark = body.classList.contains("dark")
 
-// Form Submission with Validation
+  if (window.scrollY > 100) {
+    header.style.background = isDark ? "rgba(15, 23, 42, 0.98)" : "rgba(255, 255, 255, 0.98)"
+  } else {
+    header.style.background = isDark ? "rgba(15, 23, 42, 0.95)" : "rgba(255, 255, 255, 0.95)"
+  }
+}
+
+// Header Background on Scroll
+window.addEventListener("scroll", updateHeaderBackground)
+
 const registrationForm = document.getElementById("registrationForm")
 const successMessage = document.getElementById("successMessage")
 const overlay = document.getElementById("overlay")
@@ -101,17 +104,31 @@ registrationForm.addEventListener("submit", function (e) {
     return
   }
 
-  // Email validation
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  if (!emailRegex.test(data.email)) {
+  // Check for minimum name length
+  if (data.name.trim().length < 2) {
+    alert("Name should be at least 2 characters long.")
+    return
+  }
+
+  // Email validation with more strict pattern
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+  if (!emailRegex.test(data.email.trim())) {
     alert("Please enter a valid email address.")
     return
   }
 
-  // Organization validation - max 50 characters, no special characters except spaces and hyphens
-  const orgRegex = /^[A-Za-z0-9\s-]{1,50}$/
+  // Organization validation - max 50 characters, letters, numbers, spaces, and common punctuation
+  const orgRegex = /^[A-Za-z0-9\s\-.,&()]{1,50}$/
   if (!orgRegex.test(data.organization.trim())) {
-    alert("Organization name should contain only letters, numbers, spaces, and hyphens, maximum 50 characters.")
+    alert(
+      "Organization name should contain only letters, numbers, spaces, and common punctuation, maximum 50 characters.",
+    )
+    return
+  }
+
+  // Check for minimum organization length
+  if (data.organization.trim().length < 2) {
+    alert("Organization name should be at least 2 characters long.")
     return
   }
 
@@ -183,9 +200,4 @@ document.querySelectorAll(".highlight-card").forEach((card) => {
   })
 })
 
-// Console log for debugging
 console.log("[v0] GDG Galgotias website loaded successfully!")
-console.log("[v0] Theme system initialized")
-console.log("[v0] Countdown timer started")
-console.log("[v0] Form validation ready")
-console.log("[v0] Smooth scrolling enabled")
